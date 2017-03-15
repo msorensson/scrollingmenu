@@ -8,9 +8,11 @@
 .menu__item {
     display: inline-block;
     margin-right: 10px;
+    user-select: none;
 }
 
 .menu__link {
+    user-select: none;
     font-size: 18px;
     text-decoration: none;
     padding: 8px 16px;

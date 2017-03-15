@@ -8,3 +8,9 @@ const example2 = document.getElementById('example-2');
 new HorizontalScrollingMenu(example2, {
     navigation: true
 });
+
+const example3 = document.getElementById('example-3');
+new HorizontalScrollingMenu(example3, {
+    navigation: true,
+    drag: true
+});
