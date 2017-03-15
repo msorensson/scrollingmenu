@@ -1,0 +1,19 @@
+.menu {
+    float: left;
+    font-size: 0;
+}
+
+.menu__item {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.menu__link {
+    font-size: 18px;
+    text-decoration: none;
+    padding: 8px 16px;
+    background: #222;
+    color: #fff;
+    border-radius: 30px;
+    display: block;
+}
