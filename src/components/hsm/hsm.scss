@@ -1,4 +1,48 @@
-.hsm {}
+.hsm {
+    position: relative;
+
+    &:before,
+    &:after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 50px;
+        transition: opacity 100ms;
+        pointer-events: none;
+    }
+
+    &:before {
+        left: 0;
+        background-image: linear-gradient(to right, #fff 0%, transparent 100%);
+    }
+
+    &:after {
+        right: 0;
+        background-image: linear-gradient(to left, #fff 0%, transparent 100%);
+    }
+
+    &[data-overflow-direction="right"] {
+        &:before {
+            opacity: 0;
+        }
+    }
+
+
+    &[data-overflow-direction="left"] {
+        &:after {
+            opacity: 0;
+        }
+    }
+
+    &[data-overflow-direction="none"] {
+        &:before,
+        &:after {
+            opacity: 0;
+        }
+    }
+}
 
 .hsm__scroller {
     overflow-x: auto;
