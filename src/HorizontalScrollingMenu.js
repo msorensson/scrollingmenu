@@ -5,7 +5,7 @@ class HorizontalScrollingMenu {
         this.scroller = el.firstElementChild;
         this.content = this.scroller.firstElementChild;
 
-        this.onScroll = this.onScroll.bind(this);
+        this.onChange = this.onChange.bind(this);
 
         this.ticking = false;
 
@@ -35,7 +35,7 @@ class HorizontalScrollingMenu {
         this.el.setAttribute('data-overflow-direction', this.getOverflowDirections());
     }
 
-    onScroll() {
+    onChange() {
         const self = this;
 
         if (!this.ticking) {
@@ -49,7 +49,8 @@ class HorizontalScrollingMenu {
     }
 
     addEventListeners() {
-        this.scroller.addEventListener('scroll', this.onScroll);
+        this.scroller.addEventListener('scroll', this.onChange);
+        window.addEventListener('resize', this.onChange);
     }
 
     init() {
