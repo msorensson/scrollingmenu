@@ -14,5 +14,13 @@ body {
     margin: auto;
 }
 
+h2 {
+    margin-top: 100px;
+}
+
+.hsm {
+    margin-top: 50px;
+}
+
 @import './components/hsm/hsm';
 @import './components/menu/menu';

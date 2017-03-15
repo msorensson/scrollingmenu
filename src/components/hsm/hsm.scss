@@ -61,3 +61,36 @@
         clear: both;
     }
 }
+
+.hsm__navbutton {
+    display: block;
+    border-width: 0;
+    outline: none;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: red;
+    top: 50%;
+    margin-top: -15px;
+    z-index: 1;
+    border-radius: 100%;
+    transition: opacity 200ms;
+
+    &--left {
+        left: 10px;
+
+        .hsm[data-overflow-direction="right"] &,
+        .hsm[data-overflow-direction="none"] & {
+            opacity: 0;
+        }
+    }
+
+    &--right {
+        right: 10px;
+
+        .hsm[data-overflow-direction="left"] &,
+        .hsm[data-overflow-direction="none"] & {
+            opacity: 0;
+        }
+    }
+}
