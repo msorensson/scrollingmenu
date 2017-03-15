@@ -4,8 +4,9 @@
   "description": "Plugin for making a horizontal scrolling responsive menu bar",
   "main": "index.js",
   "scripts": {
+    "build:webpack": "webpack --progress --optimize-minimize",
+    "build": "npm run build:webpack",
     "dev:server": "webpack-dev-server --content-base build/",
-    "dev:webpack": "webpack -w",
     "dev": "npm run dev:webpack"
   },
   "repository": {
