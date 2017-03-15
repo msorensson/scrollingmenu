@@ -1,4 +1,5 @@
 build/style.css
+build/style.js
 build/script.js
 .DS_Store
 node_modules
