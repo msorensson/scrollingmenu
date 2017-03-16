@@ -23,6 +23,8 @@ class HorizontalScrollingMenu {
         this.tap = this.tap.bind(this);
         this.drag = this.drag.bind(this);
         this.release = this.release.bind(this);
+        this.track = this.track.bind(this);
+        this.autoScroll = this.autoScroll.bind(this);
 
         // Runtime variables.
         this.ticking = false;
@@ -32,6 +34,12 @@ class HorizontalScrollingMenu {
         this.draggedOffset = 0;
         this.dragMax = 0;
         this.dragMin = 0;
+
+        this.velocity = 0;
+        this.amplitude = 0;
+        this.frame = 0;
+        this.timestamp = 0;
+        this.ticker = null;
 
         this.init();
     }
@@ -139,13 +147,23 @@ class HorizontalScrollingMenu {
 
     tap(e) {
         const {content, scroller} = this;
-        e.preventDefault();
-        content.style.transitionProperty = 'none';
+
+        this.afterNavigate();
+        this.draggedOffset = 0;
 
         this.dragMax = content.offsetWidth - scroller.offsetWidth;
         this.pressed = true;
         this.startDragX = e.clientX;
+
+        this.velocity = this.amplitude = 0;
+        this.frame = this.dragOffset = 0;
+        this.timestamp = Date.now();
+        clearInterval(this.ticker);
+        this.ticker = setInterval(this.track, 100);
+
+        content.style.transitionProperty = 'none';
         window.addEventListener('mouseup', this.release);
+        e.preventDefault();
     }
 
     drag(e) {
@@ -167,11 +185,60 @@ class HorizontalScrollingMenu {
         }
     }
 
+    track() {
+        let now = Date.now(),
+            elapsed = now - this.timestamp,
+            delta = this.draggedOffset - this.frame,
+            v = 1000 * delta / (1 + elapsed);
+
+        this.timestamp = now;
+        this.frame = this.draggedOffset;
+
+        v = 1000 * delta / (1 + elapsed);
+        this.velocity = 0.8 * v + 0.2 * this.velocity;
+        console.log(this.velocity);
+    }
+
     release() {
         this.pressed = false;
+        clearInterval(this.ticker);
+
+        if (this.velocity > 10 || this.velocity < -10) {
+            this.amplitude = 0.8 * this.velocity;
+            this.scrollTarget = Math.round(this.draggedOffset + this.amplitude);
+
+            this.scrollTarget = Math.max(this.scrollTarget, this.getCurrentDragMin());
+            this.scrollTarget = Math.min(this.scrollTarget, this.getCurrentDragMax());
+
+            this.timestamp = Date.now();
+            requestAnimationFrame(this.autoScroll);
+        } else {
+            this.afterNavigate();
+            this.draggedOffset = 0;
+        }
+
         window.removeEventListener('mouseup', this.release);
-        this.afterNavigate();
-        this.draggedOffset = 0;
+    }
+
+    autoScroll() {
+        var elapsed, delta, timeConstant = 325;
+        if (this.amplitude) {
+            elapsed = Date.now() - this.timestamp;
+            delta = -this.amplitude * Math.exp(-elapsed / timeConstant);
+
+            this.draggedOffset = Math.max(this.scrollTarget + delta, this.getCurrentDragMin());
+            this.draggedOffset = Math.min(this.draggedOffset, this.getCurrentDragMax());
+
+            if (delta > 0.5 || delta < -0.5) {
+                this.content.style.transform = 'translateX(' + (this.draggedOffset) + 'px)';
+                requestAnimationFrame(this.autoScroll);
+
+            } else {
+                this.content.style.transform = 'translateX(' + (this.draggedOffset) + 'px)';
+                this.afterNavigate();
+                this.draggedOffset = 0;
+            }
+        }
     }
 
     getCurrentDragMax() {
