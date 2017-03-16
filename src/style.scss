@@ -1,3 +1,5 @@
+@import './colors';
+
 *,
 *:after,
 *:before {
@@ -5,22 +7,25 @@
 }
 
 body {
-    font-family: Helvetica Neue, sans-serif;
+    background-image: url(./img/asanoha-400px.png);
+    font-family: PT Sans, sans-serif;
     padding: 15px;
+    color: $secondary;
 }
 
 .page-wrapper {
-    max-width: 800px;
+    max-width: 960px;
     margin: auto;
 }
 
-h2 {
-    margin-top: 100px;
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 60px;
+    text-align: center;
+    color: $primary;
+    text-shadow: 1px 1px 1px rgba(255,255,255, 1), 0px 0px 1px rgba(0, 0, 0, 1);
 }
 
-.hsm {
-    margin-top: 50px;
-}
-
+@import './components/example/example';
 @import './components/hsm/hsm';
 @import './components/menu/menu';

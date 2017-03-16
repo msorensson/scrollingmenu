@@ -70,15 +70,19 @@
     position: absolute;
     width: 30px;
     height: 30px;
-    background: red;
     top: 50%;
     margin-top: -15px;
     z-index: 2;
-    border-radius: 100%;
     transition: opacity 200ms;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url(./img/arrow.svg);
+    background-size: contain;
+    background-color: transparent;
 
     &--left {
         left: 10px;
+        transform: rotate(-180deg);
 
         .hsm[data-overflow-direction="right"] &,
         .hsm[data-overflow-direction="none"] & {
