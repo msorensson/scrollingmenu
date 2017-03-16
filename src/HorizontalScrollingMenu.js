@@ -1,8 +1,4 @@
 'use strict';
-const getMousePosition = (e) => {
-    return 0;
-};
-
 class HorizontalScrollingMenu {
     constructor(el, opts) {
         this.el = el;
