@@ -49,13 +49,14 @@ class HorizontalScrollingMenu {
         const {right: scrollerRight, left: scrollerLeft} = scroller.getBoundingClientRect();
         const {right: contentRight, left: contentLeft} = content.getBoundingClientRect();
 
-        if (scrollerLeft > contentLeft && scrollerRight < contentRight) {
+        if (scrollerLeft > contentLeft &&
+            scroller.scrollLeft < (content.offsetWidth - scroller.offsetWidth)) {
             return 'both';
 
         } else if (contentLeft < scrollerLeft) {
             return 'left';
 
-        } else if (contentRight > scrollerRight) {
+        } else if (scroller.scrollLeft < (content.offsetWidth - scroller.offsetWidth)) {
             return 'right';
 
         } else {
